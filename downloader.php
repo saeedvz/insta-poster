@@ -19,14 +19,12 @@
 
 			$userId = $ig->people->getUserIdForName($_POST['username']);
 			$maxId = null;
-			$counter = 1;
 			do {
 				$feeds = $ig->timeline->getUserFeed($userId, $maxId);
 				foreach ($feeds->items as $feed) {
 					if(isset($feed->image_versions2) && isset($feed->image_versions2->candidates)){
 						if(isset($feed->image_versions2->candidates[0]->url)){
-							file_put_contents(__DIR__ . '/posts/' . $counter . '.jpg', fopen($feed->image_versions2->candidates[0]->url, 'r'));
-							$counter++;
+							file_put_contents(__DIR__ . '/posts/' . strtotime('now') . rand(100000 ,900000) . '.jpg', fopen($feed->image_versions2->candidates[0]->url, 'r'));
 						}
 					}
 				}				
