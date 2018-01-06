@@ -1,0 +1,1 @@
+php C:\nginx\html\instagram\poster.php
