@@ -10,31 +10,31 @@
 		<input type="submit" name="submit" value="Submit">
 		<?php
 
-		require __DIR__ . '/vendor/autoload.php';
-		require __DIR__ . '/configs.php';
+        require __DIR__.'/vendor/autoload.php';
+        require __DIR__.'/configs.php';
 
-		if(isset($_POST['submit'])){
-			$ig = new \InstagramAPI\Instagram(false, false);
-			$ig->login($configs['username'], $configs['password']);
+        if (isset($_POST['submit'])) {
+            $ig = new \InstagramAPI\Instagram(false, false);
+            $ig->login($configs['username'], $configs['password']);
 
-			$userId = $ig->people->getUserIdForName($_POST['username']);
-			$maxId = null;
-			do {
-				$feeds = $ig->timeline->getUserFeed($userId, $maxId);
-				foreach ($feeds->items as $feed) {
-					if(isset($feed->image_versions2) && isset($feed->image_versions2->candidates)){
-						if(isset($feed->image_versions2->candidates[0]->url)){
-							file_put_contents(__DIR__ . '/posts/' . strtotime('now') . rand(100000 ,900000) . '.jpg', fopen($feed->image_versions2->candidates[0]->url, 'r'));
-						}
-					}
-				}				
-				$maxId = $feeds->getNextMaxId();
-			} while ($maxId !== null);
+            $userId = $ig->people->getUserIdForName($_POST['username']);
+            $maxId = null;
+            do {
+                $feeds = $ig->timeline->getUserFeed($userId, $maxId);
+                foreach ($feeds->items as $feed) {
+                    if (isset($feed->image_versions2) && isset($feed->image_versions2->candidates)) {
+                        if (isset($feed->image_versions2->candidates[0]->url)) {
+                            file_put_contents(__DIR__.'/posts/'.strtotime('now').rand(100000, 900000).'.jpg', fopen($feed->image_versions2->candidates[0]->url, 'r'));
+                        }
+                    }
+                }
+                $maxId = $feeds->getNextMaxId();
+            } while ($maxId !== null);
 
-			echo "done";
-		}
+            echo 'done';
+        }
 
-		?>
+        ?>
 	</form>
 </body>
 </html>

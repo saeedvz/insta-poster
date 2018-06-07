@@ -1,6 +1,6 @@
 <?php
 
 $configs = [
-	'username' => 'instagram_username',
-	'password' => 'instagram_password'
+    'username' => 'instagram_username',
+    'password' => 'instagram_password',
 ];
